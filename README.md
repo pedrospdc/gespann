@@ -16,8 +16,6 @@ Gespann tracks every aspect of network connections in real-time:
 
 ## How It Works
 
-Built on eBPF technology, Gespann operates with minimal overhead:
-
 1. **Kernel-Level Monitoring** - eBPF programs attach to kernel functions (`tcp_connect`, `tcp_close`, `tcp_sendmsg`) to capture connection events
 2. **Zero-Copy Data Collection** - Events are efficiently transferred from kernel to userspace via ring buffers
 3. **Real-Time Processing** - Go userspace program processes events and maintains connection state
