@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  GO_IMAGE: "golang:1.24.5-alpine"
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.24.5-alpine
+    steps:
+    - name: Install system dependencies
+      run: |
+        apk add --no-cache git clang llvm libbpf-dev linux-headers make gcc musl-dev bpftool
+
+    - uses: actions/checkout@v4
+
+    - name: Setup Git
+      run: |
+        git config --global user.email "ci@github.com"
+        git config --global user.name "GitHub CI"
+        git config --global --add safe.directory "$(pwd)"
+
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: /go/pkg/mod
+        key: ${{ runner.os }}-alpine-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-alpine-go-
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Generate eBPF code
+      run: make generate
+
+    - name: Run tests
+      run: make test
+
+    - name: Run vet
+      run: make vet
+
+    - name: Check formatting
+      run: |
+        make fmt
+        git diff --exit-code
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.24.5-alpine
+    steps:
+    - name: Install system dependencies
+      run: |
+        apk add --no-cache git clang llvm libbpf-dev linux-headers make gcc musl-dev bpftool
+
+    - uses: actions/checkout@v4
+
+    - name: Setup Git
+      run: |
+        git config --global user.email "ci@github.com"
+        git config --global user.name "GitHub CI"
+        git config --global --add safe.directory "$(pwd)"
+
+    - name: Generate eBPF code
+      run: make generate
+
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: latest
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.24.5-alpine
+    needs: [test, lint]
+    steps:
+    - name: Install system dependencies
+      run: |
+        apk add --no-cache git clang llvm libbpf-dev linux-headers make gcc musl-dev bpftool
+
+    - uses: actions/checkout@v4
+
+    - name: Setup Git
+      run: |
+        git config --global user.email "ci@github.com"
+        git config --global user.name "GitHub CI"
+        git config --global --add safe.directory "$(pwd)"
+
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: /go/pkg/mod
+        key: ${{ runner.os }}-alpine-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-alpine-go-
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Generate eBPF code
+      run: make generate
+
+    - name: Build binary
+      run: make build
+
+    - name: Upload binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: gespann-binary
+        path: bin/gespann

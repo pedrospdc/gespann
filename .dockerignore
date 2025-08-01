@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Development files
+.vscode
+.idea
+
+# Build artifacts
+bin/
+*.o
+*_bpfel.go
+*_bpfeb.go
+
+# Go modules cache
+.cache
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# CI/CD
+.github/
+
+# Monitoring (not needed in container)
+monitoring/
+
+# Test files
+*_test.go
+test/
+tests/
+
+# Environment files
+.env*
+
+# Temporary files
+tmp/
+temp/
