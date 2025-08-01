@@ -31,7 +31,6 @@ Gespann is designed for:
 - **Performance Debugging** - Identify network bottlenecks, latency issues, and connection problems
 - **Security Monitoring** - Detect unusual connection patterns, failed attempts, and network anomalies
 - **Capacity Planning** - Understand bandwidth usage, connection patterns, and resource requirements
-- **SRE & DevOps** - Complement existing monitoring stacks with network-layer insights
 
 Perfect for containerized environments, service meshes, and any Linux-based infrastructure requiring network visibility.
 
