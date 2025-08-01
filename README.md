@@ -1,6 +1,6 @@
 # Gespann
 
-**Real-time network connection observability powered by eBPF**
+**Tiny real-time network connection observability powered by eBPF**
 
 Gespann is a high-performance network monitoring sidecar that provides deep visibility into TCP/UDP connections without application changes or network overhead. It uses eBPF (Extended Berkeley Packet Filter) to capture connection events directly from the Linux kernel, delivering comprehensive network observability for modern distributed systems.
 
