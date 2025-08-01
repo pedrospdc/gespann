@@ -30,8 +30,6 @@ Gespann is designed for:
 - **Security Monitoring** - Detect unusual connection patterns, failed attempts, and network anomalies
 - **Capacity Planning** - Understand bandwidth usage, connection patterns, and resource requirements
 
-Perfect for containerized environments, service meshes, and any Linux-based infrastructure requiring network visibility.
-
 ## Architecture
 
 ```mermaid
