@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Gespann Connection Tracker",
+    "tags": ["gespann", "ebpf", "connections"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Open Connections",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "gespann_open_connections",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Total Connections",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "gespann_total_connections",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 6, "x": 6, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Connection Events Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(gespann_connection_events_total[5m])",
+            "refId": "A",
+            "legendFormat": "{{event_type}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 4,
+        "title": "Connection Events by Type",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "gespann_connection_events_total",
+            "refId": "A",
+            "legendFormat": "{{event_type}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8}
+      }
+    ],
+    "time": {"from": "now-1h", "to": "now"},
+    "refresh": "5s"
+  }
+}

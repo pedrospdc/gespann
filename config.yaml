@@ -1,0 +1,10 @@
+log_level: info
+
+adapters:
+  - type: prometheus
+    settings:
+      port: "8081"
+  
+  - type: datadog
+    settings:
+      host: "localhost:8125"
